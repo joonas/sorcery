@@ -74,6 +74,7 @@ module Sorcery
                 # allows overriding the permissions that will be requested from facebook
                 def authorize_url
                   @scope = self.permissions.present? ? self.permissions.join(",") : @scope
+                  super
                 end
                 
                 # tries to login the user from access token
