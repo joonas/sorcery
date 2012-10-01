@@ -35,7 +35,8 @@ module Sorcery
                               :user_info_path,
                               :scope,
                               :user_info_mapping,
-                              :display
+                              :display,
+                              :permissions
                 attr_reader   :access_token
 
                 include Protocols::Oauth2
@@ -68,6 +69,11 @@ module Sorcery
                 # to get authenticated at the external provider's site.
                 def login_url(params,session)
                   self.authorize_url
+                end
+
+                # allows overriding the permissions that will be requested from facebook
+                def authorize_url
+                  @scope = self.permissions.present? ? self.permissions.join(",") : @scope
                 end
                 
                 # tries to login the user from access token
